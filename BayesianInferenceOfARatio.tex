@@ -1,0 +1,49 @@
+% http://www.ctan.org/tex-archive/macros/latex/contrib/beamer/examples
+% http://latex.artikel-namsu.de/english/beamer-examples.html
+
+%\documentclass{beamer}
+\documentclass[usenames,dvipsnames]{beamer}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{bm}
+\usepackage{fancybox, graphicx}
+\usepackage{listings}
+\usepackage{tikz} % Diagrams
+\usepackage{color}
+\usepackage{textcomp} % See https://tex.stackexchange.com/questions/145416/how-to-have-straight-single-quotes-in-lstlistings
+
+\lstset{language=bash,upquote=true} % Format listings as appropriate for bash. Inexplicably we get problems if the language is set as part of the \begin{lstlisting} command.
+
+% https://tex.stackexchange.com/questions/36030/how-to-make-a-single-word-look-as-some-code
+\definecolor{light-gray}{gray}{0.95}
+\newcommand{\code}[1]{\colorbox{light-gray}{\texttt{#1}}}
+
+\usetheme{boxes}
+\usecolortheme{beaver}
+
+\title{What Can a Bayesian Say About $y/x$?}
+\author{Lorne Whiteway \\ lorne.whiteway.13@ucl.ac.uk}
+\institute{Astrophysics Group \\ Department of Physics and Astronomy \\ University College London}
+\date{21 November 2025}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\begin{frame}{Purpose of presentation}
+  \begin{block}{}
+    \begin{itemize}
+      \item{foo}
+      \item{bar}
+      \item{baz}
+      \item{qux}
+      \item{quux}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+
+
+
+
+\end{document}
