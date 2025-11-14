@@ -40,17 +40,38 @@
   \end{block}
 \end{frame}
 
-\begin{frame}{Purpose of presentation}
+\begin{frame}{Problem}
   \begin{block}{}
     \begin{itemize}
-      \item{I'll show how to do Bayesian inference in a context that's simple but non-trivial.}
-      \item{Talk will be mostly mathematical}
-      \item{Existing knowledge of Bayesian ideas is useful but not necessary.}
+      \item{We make noisy measurements of $x$ and $y$ and we want to infer $b = y/x$.}
+      \item{The answer should be probabilistic (due to the uncertainty arising from the measurement noise).}
     \end{itemize}
   \end{block}
 \end{frame}
 
+\begin{frame}{Noise model}
+  \begin{block}{}
+    I want to keep the noise model simple, so let's asume: \\
+    
+    \setlength{\parindent}{1 cm} Noise in $x$ and noise in $y$ are uncorrelated Gaussian with standard deviations $\sigma_x$ and $\sigma_y$ (which we will assume to both be unity).
+  \end{block}
+\end{frame}
 
+\begin{frame}{Data}
+  \begin{block}{}
+    We make one observation of $x$ (call the measured value $\tilde{x}$) and one of $y$ (call the measured value $\tilde{y}$).
+    
+    Assume that we are in the low signal-to-noise regime, so $\tilde{x}$ and $\tilde{y}$ are `a few' (e.g. not `a few thousand'). For example, $\tilde{x} = 3$ and $\tilde{y} = 4$.
+    
+  \end{block}
+\end{frame}
+
+
+\begin{frame}{Naive calculation}
+  \begin{block}{}
+    So here's a calculation that might appear reasonable to do.
+  \end{block}
+\end{frame}
 
 
 
