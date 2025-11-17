@@ -12,6 +12,8 @@
 \usepackage{color}
 \usepackage{textcomp} % See https://tex.stackexchange.com/questions/145416/how-to-have-straight-single-quotes-in-lstlistings
 
+\newcommand{\mathd}{\ensuremath{\mathrm{d}}}
+
 \lstset{language=bash,upquote=true} % Format listings as appropriate for bash. Inexplicably we get problems if the language is set as part of the \begin{lstlisting} command.
 
 % https://tex.stackexchange.com/questions/36030/how-to-make-a-single-word-look-as-some-code
@@ -33,7 +35,7 @@
 \begin{frame}{Purpose of presentation}
   \begin{block}{}
     \begin{itemize}
-      \item{I'll show how to do Bayesian inference in a context that's simple but non-trivial.}
+      \item{I'll show how to do Bayesian inference in a context that is straightforward but non-trivial.}
       \item{Talk will be pedagogical and mostly mathematical.}
       \item{Prior knowledge of Bayesian ideas is useful but not necessary.}
       \item{Thanks to Niall Jeffrey for help.}
@@ -108,11 +110,49 @@
 \begin{frame}{Naive calculation}
 	\begin{figure}
 	\centering
-%	\vspace*{-1cm} 
-%             \hspace*{-2cm}
 		\includegraphics[scale=0.8]{figure_1.png}
 	\end{figure}
 \end{frame}
+
+\begin{frame}{Naive calculation}
+	\begin{figure}
+	\centering
+		\includegraphics[scale=0.8]{figure_2.png}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Naive calculation}
+	\begin{figure}
+	\centering
+		\includegraphics[scale=0.8]{figure_3.png}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Naive calculation}
+    \begin{itemize}
+    \item{So we need to calculate the probability mass within the thin pie-shaped region.}
+    \item{Note that this region doesn't have constant angular width!}
+     \item{Intuition: should we expect the distribution of $b$ to be Gaussian? symmetric?}
+     \item{Do you expect its mode to be at $\tilde{b} = \tilde{y} / \tilde{x}$?}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Naive calculation}
+The calculation we need is
+\begin{equation}
+C \int_{\textrm{pie}} \exp(-\frac{1}{2} (x-\tilde{x})^2 + (y-\tilde{y})^2)) \ \mathd{}x \ \mathd{}y
+\end{equation}
+\end{frame}
+
+\begin{frame}{Naive calculation}
+    Tricks for doing this calculation:
+        \begin{itemize}
+    \item{Use polar coordinates $\mathd{}x \ \mathd{}y =  r \ \mathd{}r \ \mathd{}\theta$.}
+    \item{Don't forget the opposite quadrant! So $-\infty < r < \infty$.}
+     \item{Complete the square.}
+    \end{itemize}
+\end{frame}
+
 
 
 
