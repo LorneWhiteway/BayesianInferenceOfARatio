@@ -36,11 +36,36 @@
       \item{I'll show how to do Bayesian inference in a context that's simple but non-trivial.}
       \item{Talk will be mostly mathematical}
       \item{Existing knowledge of Bayesian ideas is useful but not necessary.}
+      \item{Thanks to Niall Jeffrey for help.}
     \end{itemize}
   \end{block}
 \end{frame}
 
-\begin{frame}{Problem}
+\begin{frame}{The Original Cosmological Motivation (1)}
+  \begin{block}{}
+    \begin{itemize}
+      \item{The \textit{overdensity} of dark matter (DM), denoted $\delta_{\textrm{DM}}$,  is the percentage difference between the local density (in some volume) and the universal average density. }
+      \item{Overdensities have existed since early times. Gravity draws DM into overdense regions, so the overdensities get bigger with time.}
+      \item{There is a similar definition for baryons. Baryons fall into DM overdensities, so we get baryon overdensities in the same place.}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{The Original Cosmological Motivation (2)}
+  \begin{block}{}
+    \begin{itemize}
+      \item{Physical effects mean that the baryon overdensity need not equal the DM overdensity; a simple model assumes a linear relationship:
+      \begin{equation*}
+      b = \frac{\delta_{\textrm{baryon}}}{\delta_{\textrm{DM}}}
+      \end{equation*}
+      }
+      \medskip
+      \item{In a recent paper (\url{https://arxiv.org/abs/2509.18967}), we (Ellen, Niall, LW, Ofer, Josh, et al.) measured the baryon overdensity (from galaxy counts) and the DM overdensity (from weak-lensing mass maps). But how then to infer something about $b$?}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Restate as a Statistics Problem}
   \begin{block}{}
     \begin{itemize}
       \item{We make noisy measurements of $x$ and $y$ and we want to infer $b = y/x$.}
@@ -51,18 +76,22 @@
 
 \begin{frame}{Noise model}
   \begin{block}{}
-    I want to keep the noise model simple, so let's asume: \\
-    
-    \setlength{\parindent}{1 cm} Noise in $x$ and noise in $y$ are uncorrelated Gaussian with standard deviations $\sigma_x$ and $\sigma_y$ (which we will assume to both be unity).
+  \begin{itemize}
+    \item{
+    Let's assume a simple model for the measurement noise: \\
+    \bigskip
+    Measurement noise in $x$ and measurement noise in $y$ are uncorrelated Gaussian with standard deviations $\sigma_x$ and $\sigma_y$ (which we will assume to both be unity).
+    }
+    \end{itemize}
   \end{block}
 \end{frame}
 
 \begin{frame}{Data}
   \begin{block}{}
-    We make one observation of $x$ (call the measured value $\tilde{x}$) and one of $y$ (call the measured value $\tilde{y}$).
-    
-    Assume that we are in the low signal-to-noise regime, so $\tilde{x}$ and $\tilde{y}$ are `a few' (e.g. not `a few thousand'). For example, $\tilde{x} = 3$ and $\tilde{y} = 4$.
-    
+  \begin{itemize}
+    \item{We make one observation of $x$ (call the measured value $\tilde{x}$) and one of $y$ (call the measured value $\tilde{y}$).}
+    \item{Assume that we are in the low signal-to-noise regime, so $\tilde{x}$ and $\tilde{y}$ are `a few' (e.g. not `a few thousand'). For example, $\tilde{x} = 3$ and $\tilde{y} = 4$.}
+    \end{itemize}
   \end{block}
 \end{frame}
 
