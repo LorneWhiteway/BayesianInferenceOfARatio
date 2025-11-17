@@ -34,8 +34,8 @@
   \begin{block}{}
     \begin{itemize}
       \item{I'll show how to do Bayesian inference in a context that's simple but non-trivial.}
-      \item{Talk will be mostly mathematical}
-      \item{Existing knowledge of Bayesian ideas is useful but not necessary.}
+      \item{Talk will be pedagogical and mostly mathematical.}
+      \item{Prior knowledge of Bayesian ideas is useful but not necessary.}
       \item{Thanks to Niall Jeffrey for help.}
     \end{itemize}
   \end{block}
@@ -89,16 +89,18 @@
 \begin{frame}{Data}
   \begin{block}{}
   \begin{itemize}
-    \item{We make one observation of $x$ (call the measured value $\tilde{x}$) and one of $y$ (call the measured value $\tilde{y}$).}
+    \item{We make one observation of $x$ (call the measured value $\tilde{x}$) and one of $y$ (call the measured value $\tilde{y}$). \\ \bigskip}
     \item{Assume that we are in the low signal-to-noise regime, so $\tilde{x}$ and $\tilde{y}$ are `a few' (e.g. not `a few thousand'). For example, $\tilde{x} = 3$ and $\tilde{y} = 4$.}
     \end{itemize}
   \end{block}
 \end{frame}
 
-
 \begin{frame}{Naive calculation}
   \begin{block}{}
-    So here's a calculation that might appear reasonable to do.
+    \begin{itemize}
+    \item{So here's a naive calculation that appears reasonable to do:}
+    \item{By subtracting the (unknown) noise from $(\tilde{x},\tilde{y})$ we get a Gaussian distribution of the true values $(x,y)$ that is centred on $(\tilde{x},\tilde{y})$. For each possible true $(x,y)$ there is a true $b=y/x$, hence we have a distribution of the true $b$.}
+   \end{itemize}
   \end{block}
 \end{frame}
 
