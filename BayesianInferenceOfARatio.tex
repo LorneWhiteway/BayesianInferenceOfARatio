@@ -9,6 +9,7 @@
 \usepackage{fancybox, graphicx}
 \usepackage{listings}
 \usepackage{tikz} % Diagrams
+\usetikzlibrary {arrows.meta}
 \usepackage{color}
 \usepackage{textcomp} % See https://tex.stackexchange.com/questions/145416/how-to-have-straight-single-quotes-in-lstlistings
 
@@ -155,13 +156,147 @@ C \int_{\textrm{pie}} \exp(-\frac{1}{2} (x-\tilde{x})^2 + (y-\tilde{y})^2)) \ \m
 
 
 \begin{frame}{What is the statistical theory behind this calculation?}
-    Two main statistical paradigms, with differing notions of what `probability' means:
+    Two main statistical paradigms, with different notions of what `probability' means:
     \begin{itemize}
-    \item{Frequentist. Probability is \testit{Limiting ratio as number of trials goes to infinity} e.g. probability of rolling 8 with two dice is .True value is fixed, and cannot be To primarUse polar coordinates $\mathd{}x \ \mathd{}y =  r \ \mathd{}r \ \mathd{}\theta$.}
-    \item{Don't forget the opposite quadrant! So $-\infty < r < \infty$.}
-     \item{Complete the square.}
+    \item{Frequentist. Probability is \textit{limiting ratio as the  number of trials goes to infinity} e.g. probability of rolling 8 with two dice is $5/36$. The true value are fixed, and cannot be modelled probabilistically; randomness enters via measurement noise.}
+    \item{Bayesian. Probability is \textit{subjective degree of belief} (subjective as it depends on how much information we have). We don't know the true value, hence we can speak probabilistically about it.}
     \end{itemize}
 \end{frame}
+
+\begin{frame}{Naive calculation}
+        \begin{itemize}
+    \item{So the naive calculation can't be frequentist (as it uses the notion of a probability distribution of the true $x$ and $y$). \\ \bigskip}
+    \item{So it's Bayesian - but half-baked! Let's do it properly.}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Bayesian theory requires \textit{context}}
+        \begin{itemize}
+    \item{Context here means a model. The model will generally go all the way from (at the start) some model parameters, via various calculations (some mathematical, some physical, and certainly some modelling the effect of measurement noise) through to (at the end) observables i.e. measured data.}
+    \item{Context also means that we already have existing results (e.g. from prior experiments) on the probability distributions of the model parameters.}
+    \item{You have enough context when you can generate plausible new `synthetic' measurement results.}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Bayesian inference}
+        \begin{itemize}
+    \item{With new data in hand, we use the rules of conditional probability to refine the probability distribution of the model parameters, moving from the \textit{prior} probability that we had before our experiment to the new \textit{posterior} probability after our experiment.}
+    \item{The result from conditional probability is Bayes's Theorem: \\
+    \begin{equation*}
+    p(\textrm{params}|\textrm{data}) \propto p(\textrm{data} | \textrm{params}) \ p(\textrm{params})
+    \end{equation*}
+    }
+    \item{This gives us the shape of the posterior distribution of the parameters, but not the overall normalisation; in many applications that doesn't matter.}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Likelihood}
+        \begin{itemize}
+    \item{The first term on the right hand side, $p(\textrm{data} | \textrm{params})$, is the \textit{likelihood}. It's a probability distribution for the data (e.g. if we integrate over all possible data, with the params held fixed, we will get unity).}
+    \item{But we use it \textit{the other way around}: we hold the data fixed, and see how the likelihood varies as the model parameters vary.}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Model for our ratio problem}
+        \begin{itemize}
+    \item{We are interested in the ratio $b$, so let's make that a model parameter.}
+    \item{We need to specify a prior probability distribution for $b$. Here we are departing from the naive calculation; it requires that we \textbf{be physicists} i.e. think about the actual meaning of the ratio. To keep the calculations easy, I make the following prior assumption: $b$ must be positive, and cannot exceed $10$, and the probability is flat between these values (so is a \textit{top hat}).}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{A nuisance parameter}
+        \begin{itemize}
+    \item{Is that enough? Well, can we generate new simulated data observations? No! All we can do is choose a plausable value of $b$ from our prior distribution; that's not enough to generate new simulated data, as we have no idea what $x$ and $y$ need to be.}
+    \item{So we need at least one new parameter. It will suffice e.g. to take $x$ as a parameter. This is a \textit{nuisance} parameter; it's needed but we don't actually care about its value. We also need a prior distribution on $x$; again here we need to know that actual physical meaning of $x$. For simplicity I will take a (broad) range: tophat between $-10$ and $30$.}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{The model is now complete}
+        \begin{itemize}
+    \item{The model is now complete. If desired, we could generate new synthetic data: choose $b$ and $x$ from their priors, set $y=bx$, and add $N(0,1)$ noise to $x$ and $y$  to get new data $\tilde{x}$ and $\tilde{y}$.}
+    \item{So let's do it!}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Synthetic data}
+	\begin{figure}
+	\centering
+		\includegraphics[scale=0.8]{figure_4.png}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Simulation based inference}
+        \begin{itemize}
+    \item{If desired, we could stop there! We could look at the simulated data points that are `close to' to the observed data point (big red dot), and make a histogram of the $b$ values that were used to generate these synthetic points. This will give the posterior on $b$.}
+    \item{This is \textit{simulation based inference}.}
+    \item{Note that the histogram will include some points with high $b$, corresponding to true $(x,y)$ in the upper left corner, that were then scattered by measurement noise to be close to the red dot. So we should expect our posterior to have a tail to the right.}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Hierarchical model}
+        \begin{itemize}
+    \item{Our model is \textit{hierarchical}. For example, $y$ sits in between $b$ and $x$ (upon which it depends) and $\tilde{y}$ (which depends upon it).}
+    \item{We can make a graph of the model. It's a DAG (Directed (reflecting the dependence relationship) Acyclic (as cyclics would break causality) Graph) -- just like with Git...}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Bayes Model Diagram}
+\centering
+\begin{tikzpicture}[
+	state/.style={draw,rectangle,minimum size=1cm,outer sep=0pt,align=left}]
+	\node[state] (A) at (-2,3) {$x$ \\ $x \sim \textrm{tophat}$};
+	\node[state] (B) at (2,3) {$b$ \\ $b \sim \textrm{tophat}$};
+	\node[state] (C) at (2,0) {$y=bx$ \\ $p(y|x,b)=\delta(y-xb)$};
+	\node[state] (D) at (-2,-3) {$\tilde{x}=x+N(0,1)$ \\ $p(\tilde{x}|x) = \mathcal{N}(\tilde{x}; x, 1)$};
+	\node[state] (E) at (2,-3) {$\tilde{y}=y+N(0,1)$ \\ $p(\tilde{y}|y) = \mathcal{N}(\tilde{y}; y, 1)$};
+	\draw[->, thick] (A) -- (D);
+	\draw[->, thick] (B) -- (C);
+	\draw[->, thick] (A) -- (C);
+	\draw[->, thick] (C) -- (E);
+\end{tikzpicture}
+\end{frame}
+
+
+\begin{frame}{Posterior}
+	So now we can use Bayes's Theorem to write down the posterior. But if we have written out the graph correctly, then it's just a matter of multiplying all the probabilities in the graph (and you can skip to the third line):
+	\begin{align*}
+	p(b, x | \tilde{x}, \tilde{y}) &\propto  p(\tilde{x}, \tilde{y}|b, x) \ p(b) \ p(x) \\
+	&\propto p(\tilde{x} | x) \ p(\tilde{y} | y) \ p(y | x, b) \ p(b) \ p(x) \\
+	&\propto \mathcal{N}(\tilde{x}; x, 1) \ \mathcal{N}(\tilde{y}; y, 1) \ \delta(y-xb) \ U(b) \ U(x) \\ 
+	&\propto \mathcal{N}(\tilde{x}; x, 1) \ \mathcal{N}(\tilde{y}; xb, 1) \ U(b) \ U(x) \\
+	&\propto \exp(-\frac{1}{2} ((\tilde{x} - x)^2 + (\tilde{y} - xb)^2)) \ U(b) \ U(x) \\
+	\end{align*}
+\end{frame}
+
+\begin{frame}{Get rid of the nuisance parameter}
+        \begin{itemize}
+    \item{This is our answer - a posterior distribution for $x$ and $b$.}
+    \item{But we only care about $b$! So we need to \textit{project} the probabilities from the two-dimensional $(x, b)$ parameter space down to the one-dimensional $b$ parameter space. Do this by integrating over $x$.}
+    \end{itemize}
+	\begin{align*}
+	p(b | \textrm{data}) &\propto \int p(b, x |\textrm{data})) \mathd{}x \\
+	&\propto \int \exp(-\frac{1}{2} ((\tilde{x} - x)^2 + (\tilde{y} - xb)^2)) \ U(b) \ U(x) \ \mathd{}x 
+	\end{align*}
+\end{frame}
+
+\begin{frame}{Lemma}
+If $A>0$ then
+	\begin{equation*}
+	\int \exp(-\frac{A}{2}x^2 +Bx+C) \ \mathd{}x = \sqrt{\frac{2\pi}{A}} \exp\left(\frac{B^2}{2A} + C\right)
+	\end{equation*}
+\end{frame}
+
+\begin{frame}{One-dimensional posterior}
+Thus
+	\begin{equation*}
+	p(b | \textrm{data}) \propto \frac{1}{\sqrt{1+b^2}} \exp\left( \frac{(\tilde{x}+b\tilde{y})^2}{2(1+b^2)}\right)
+	\end{equation*}
+\end{frame}
+
+
+
+
+
 
 
 \end{document}

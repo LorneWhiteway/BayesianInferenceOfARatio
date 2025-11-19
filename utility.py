@@ -48,12 +48,37 @@ def make_plots():
         plt.plot([lower_limit, upper_limit], [0.80 * y for y in [lower_limit, upper_limit]], 'k-')
         plt.text(5.3, 5, r'$b+db$')
         plt.savefig('./figure_3.png', bbox_inches="tight")
-        
-        
-    
-    
-    
     plt.show()
+    
+    plt.clf
+    
+    plt.xlim(lower_limit, upper_limit)
+    plt.ylim(lower_limit, upper_limit)
+    plt.gca().set_aspect('equal')
+    
+    
+    b_prior_low = 0.0
+    b_prior_high = 10.0
+    x_prior_low = -10.0
+    x_prior_high = 30.0
+    
+    if True:
+        num_data_points = 60000
+        plt.plot([x_tilda,], [y_tilda,], 'or')
+        b_trues = np.random.uniform(b_prior_low, b_prior_high, num_data_points)
+        x_trues = np.random.uniform(x_prior_low, x_prior_high, num_data_points)
+        y_trues = b_trues * x_trues
+        x_data = x_trues + np.random.normal(loc=0.0, scale=1.0, size=num_data_points)
+        y_data = y_trues + np.random.normal(loc=0.0, scale=1.0, size=num_data_points)
+        res = plt.scatter(x_data, y_data, s=2, c=b_trues, cmap='magma') #'viridis'
+        plt.colorbar(res, label=r'True $b$')
+        
+        plt.savefig('./figure_4.png', bbox_inches="tight")
+    plt.show()
+        
+    
+
+
 
 
    
