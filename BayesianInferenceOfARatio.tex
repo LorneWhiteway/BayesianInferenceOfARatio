@@ -82,7 +82,7 @@
     \item{
     Let's assume a simple model for the measurement noise: \\
     \bigskip
-    Measurement noise in $x$ and measurement noise in $y$ are uncorrelated Gaussian with standard deviations $\sigma_x$ and $\sigma_y$ (which we will assume to both be unity).
+    The measurement noise in $x$ and the measurement noise in $y$ have uncorrelated Gaussian distributions with zero means and with standard deviations $\sigma_x$ and $\sigma_y$ (which we will assume to both be unity).
     }
     \end{itemize}
   \end{block}
@@ -101,7 +101,7 @@
   \begin{block}{}
     \begin{itemize}
     \item{So here's a naive calculation that appears reasonable to do:}
-    \item{By subtracting the (unknown) noise from $(\tilde{x},\tilde{y})$ we get a Gaussian distribution of the true values $(x,y)$ that is centred on $(\tilde{x},\tilde{y})$. For each possible true $(x,y)$ there is a true $b=y/x$, hence we have a distribution of the true $b$.}
+    \item{By subtracting the (unknown) noise from $(\tilde{x},\tilde{y})$ we get a Gaussian distribution of the true values $(x,y)$ that is centred on $(\tilde{x},\tilde{y})$. For each possible true $(x,y)$ there is a true $b=y/x$, hence we have a distribution $p$ of the true $b$.}
    \end{itemize}
   \end{block}
 \end{frame}
@@ -130,7 +130,7 @@
 
 \begin{frame}{Naive calculation}
     \begin{itemize}
-    \item{So we need to calculate the probability mass within the thin pie-shaped region.}
+    \item{So to calculate $p(b) \mathd{}b$ we need to calculate the probability mass within the thin pie-shaped region.}
     \item{Note that this region doesn't have constant angular width!}
      \item{Intuition: should we expect the distribution of $b$ to be Gaussian? symmetric?}
      \item{Do you expect its mode to be at $\tilde{b} = \tilde{y} / \tilde{x}$?}
@@ -154,6 +154,14 @@ C \int_{\textrm{pie}} \exp(-\frac{1}{2} (x-\tilde{x})^2 + (y-\tilde{y})^2)) \ \m
 \end{frame}
 
 
+\begin{frame}{What is the statistical theory behind this calculation?}
+    Two main statistical paradigms, with differing notions of what `probability' means:
+    \begin{itemize}
+    \item{Frequentist. Probability is \testit{Limiting ratio as number of trials goes to infinity} e.g. probability of rolling 8 with two dice is .True value is fixed, and cannot be To primarUse polar coordinates $\mathd{}x \ \mathd{}y =  r \ \mathd{}r \ \mathd{}\theta$.}
+    \item{Don't forget the opposite quadrant! So $-\infty < r < \infty$.}
+     \item{Complete the square.}
+    \end{itemize}
+\end{frame}
 
 
 \end{document}
