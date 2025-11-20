@@ -27,7 +27,7 @@
 \title{What Can a Bayesian Say About $y/x$?}
 \author{Lorne Whiteway \\ lorne.whiteway.13@ucl.ac.uk}
 \institute{Astrophysics Group \\ Department of Physics and Astronomy \\ University College London}
-\date{21 November 2025}
+\date{FLATs \\ 21 November 2025}
 
 \begin{document}
 
@@ -279,18 +279,31 @@ C \int_{\textrm{pie}} \exp(-\frac{1}{2} (x-\tilde{x})^2 + (y-\tilde{y})^2)) \ \m
 	\end{align*}
 \end{frame}
 
-\begin{frame}{Lemma}
+\begin{frame}{A Useful Definite Integral}
 If $A>0$ then
 	\begin{equation*}
-	\int \exp(-\frac{A}{2}x^2 +Bx+C) \ \mathd{}x = \sqrt{\frac{2\pi}{A}} \exp\left(\frac{B^2}{2A} + C\right)
+	\int_{-\infty}^{\infty} \exp(-\frac{A}{2}x^2 +Bx+C) \ \mathd{}x = \sqrt{\frac{2\pi}{A}} \exp\left(\frac{B^2}{2A} + C\right)
 	\end{equation*}
+	This generalises the Gaussian integral (for which $A=1$, $B=C=0$).
 \end{frame}
 
 \begin{frame}{One-dimensional posterior}
-Thus
+Thus we get to our goal: the marginalised posterior for $b$ (under this model):
 	\begin{equation*}
-	p(b | \textrm{data}) \propto \frac{1}{\sqrt{1+b^2}} \exp\left( \frac{(\tilde{x}+b\tilde{y})^2}{2(1+b^2)}\right)
+	p(b | \tilde{x}, \tilde{y}) \propto \frac{1}{\sqrt{1+b^2}} \exp\left( \frac{(\tilde{x}+b\tilde{y})^2}{2(1+b^2)}\right)
 	\end{equation*}
+        \begin{itemize}
+    \item{Note a factor of $1/2$ in the exponential function, but no minus sign.}
+    \item{Note the curious combination $\tilde{x}+b\tilde{y}$; you might have expected $\tilde{y}-b\tilde{x}$.}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Widening the tophat priors}
+The left and right bounds on the priors for $x$ and $b$ were somewhat arbitrary. Can we get rid of these bounds, so that the prior density is the same non-zero value everywhere? Mathematically we do this by taking the limit as the bounds go to plus and minus infinity.
+ \begin{itemize}
+    \item{For $x$ there is no problem; the required limits exist. In fact we already assumed $-\infty < x < \infty$ when we did the marginalisation integral.}
+    \item{But for $b$ we see that the posterior looks like $(1+b^2)^{-1/2}$ for large $b$; the integral of this over $0 < b < \infty$ is infinite. This is bad news for a probability distribution, as it means we can't normalise it so that the total probability (i.e. the area under the posterior function} is unity. So it's crucial to have a prior with a right-hand cutoff!
+    \end{itemize}
 \end{frame}
 
 
