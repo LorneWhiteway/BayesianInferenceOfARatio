@@ -98,6 +98,13 @@
   \end{block}
 \end{frame}
 
+\begin{frame}{Graph of the observed data}
+	\begin{figure}
+	\centering
+		\includegraphics[scale=0.75]{figure_1.png}
+	\end{figure}
+\end{frame}
+
 \begin{frame}{Naive calculation}
   \begin{block}{}
     \begin{itemize}
@@ -108,24 +115,18 @@
 \end{frame}
 
 
+
 \begin{frame}{Naive calculation}
 	\begin{figure}
 	\centering
-		\includegraphics[scale=0.8]{figure_1.png}
+		\includegraphics[scale=0.75]{figure_2.png}
 	\end{figure}
 \end{frame}
 
 \begin{frame}{Naive calculation}
 	\begin{figure}
 	\centering
-		\includegraphics[scale=0.8]{figure_2.png}
-	\end{figure}
-\end{frame}
-
-\begin{frame}{Naive calculation}
-	\begin{figure}
-	\centering
-		\includegraphics[scale=0.8]{figure_3.png}
+		\includegraphics[scale=0.75]{figure_3.png}
 	\end{figure}
 \end{frame}
 
@@ -174,7 +175,7 @@ C \int_{\textrm{pie}} \exp(-\frac{1}{2} (x-\tilde{x})^2 + (y-\tilde{y})^2)) \ \m
         \begin{itemize}
     \item{Context here means a model. The model will generally go all the way from (at the start) some model parameters, via various calculations (some mathematical, some physical, and certainly some modelling the effect of measurement noise) through to (at the end) observables i.e. measured data.}
     \item{Context also means that we already have existing results (e.g. from prior experiments) on the probability distributions of the model parameters.}
-    \item{You have enough context when you can generate plausible new `synthetic' measurement results.}
+    \item{If you can generate plausible new `synthetic' measurement results then you have enough context.}
     \end{itemize}
 \end{frame}
 
@@ -186,7 +187,7 @@ C \int_{\textrm{pie}} \exp(-\frac{1}{2} (x-\tilde{x})^2 + (y-\tilde{y})^2)) \ \m
     p(\textrm{params}|\textrm{data}) \propto p(\textrm{data} | \textrm{params}) \ p(\textrm{params})
     \end{equation*}
     }
-    \item{This gives us the shape of the posterior distribution of the parameters, but not the overall normalisation; in many applications that doesn't matter.}
+    \item{This gives us the shape of the posterior distribution of the parameters, but not the overall normalisation; in many applications the normalisation doesn't matter.}
     \end{itemize}
 \end{frame}
 
@@ -213,12 +214,12 @@ C \int_{\textrm{pie}} \exp(-\frac{1}{2} (x-\tilde{x})^2 + (y-\tilde{y})^2)) \ \m
 
 \begin{frame}{The model is now complete}
         \begin{itemize}
-    \item{The model is now complete. If desired, we could generate new synthetic data: choose $b$ and $x$ from their priors, set $y=bx$, and add $N(0,1)$ noise to $x$ and $y$  to get new data $\tilde{x}$ and $\tilde{y}$.}
+    \item{The model is now complete. If desired, we could generate new synthetic data: choose $b$ and $x$ from their priors, set $y=bx$, and add $N(0,1)$ noise to $x$ and $y$  to get new data $\tilde{x}$ and $\tilde{y}$. \\ \bigskip}
     \item{So let's do it!}
     \end{itemize}
 \end{frame}
 
-\begin{frame}{Synthetic data}
+\begin{frame}{(A portion of the) synthetic data, colour-coded by true $b$}
 	\begin{figure}
 	\centering
 		\includegraphics[scale=0.8]{figure_4.png}
@@ -228,8 +229,8 @@ C \int_{\textrm{pie}} \exp(-\frac{1}{2} (x-\tilde{x})^2 + (y-\tilde{y})^2)) \ \m
 \begin{frame}{Simulation based inference}
         \begin{itemize}
     \item{If desired, we could stop there! We could look at the simulated data points that are `close to' to the observed data point (big red dot), and make a histogram of the $b$ values that were used to generate these synthetic points. This will give the posterior on $b$.}
-    \item{This is \textit{simulation based inference}.}
-    \item{Note that the histogram will include some points with high $b$, corresponding to true $(x,y)$ in the upper left corner, that were then scattered by measurement noise to be close to the red dot. So we should expect our posterior to have a tail to the right.}
+    \item{This is a form of \textit{simulation based inference} (specifically, \textit{Approximate Bayesian Computation} = ABC; more modern alternatives exist).}
+    \item{The histogram includes some points with high $b$, corresponding to true $(x,y)$ in the upper left corner, that were then scattered by measurement noise to be close to the red dot. So we should expect our posterior to have a tail to the right.}
     \end{itemize}
 \end{frame}
 
@@ -240,7 +241,7 @@ C \int_{\textrm{pie}} \exp(-\frac{1}{2} (x-\tilde{x})^2 + (y-\tilde{y})^2)) \ \m
     \end{itemize}
 \end{frame}
 
-\begin{frame}{Bayes Model Diagram}
+\begin{frame}{Hierarchical model diagram}
 \centering
 \begin{tikzpicture}[
 	state/.style={draw,rectangle,minimum size=1cm,outer sep=0pt,align=left}]
@@ -270,11 +271,11 @@ C \int_{\textrm{pie}} \exp(-\frac{1}{2} (x-\tilde{x})^2 + (y-\tilde{y})^2)) \ \m
 
 \begin{frame}{Get rid of the nuisance parameter}
         \begin{itemize}
-    \item{This is our answer - a posterior distribution for $x$ and $b$.}
+    \item{This is our answer - it's the (joint) posterior distribution for $x$ and $b$ (under this model).}
     \item{But we only care about $b$! So we need to \textit{project} the probabilities from the two-dimensional $(x, b)$ parameter space down to the one-dimensional $b$ parameter space. Do this by integrating over $x$.}
     \end{itemize}
 	\begin{align*}
-	p(b | \textrm{data}) &\propto \int p(b, x |\textrm{data})) \mathd{}x \\
+	p(b | \textrm{data}) &\propto \int p(b, x |\textrm{data})) \ \mathd{}x \\
 	&\propto \int \exp(-\frac{1}{2} ((\tilde{x} - x)^2 + (\tilde{y} - xb)^2)) \ U(b) \ U(x) \ \mathd{}x 
 	\end{align*}
 \end{frame}
@@ -282,12 +283,12 @@ C \int_{\textrm{pie}} \exp(-\frac{1}{2} (x-\tilde{x})^2 + (y-\tilde{y})^2)) \ \m
 \begin{frame}{A Useful Definite Integral}
 If $A>0$ then
 	\begin{equation*}
-	\int_{-\infty}^{\infty} \exp(-\frac{A}{2}x^2 +Bx+C) \ \mathd{}x = \sqrt{\frac{2\pi}{A}} \exp\left(\frac{B^2}{2A} + C\right)
+	\int_{-\infty}^{\infty} \exp(-Ax^2 +Bx+C) \ \mathd{}x = \sqrt{\frac{\pi}{A}} \exp\left(\frac{B^2}{4A} + C\right)
 	\end{equation*}
 	This generalises the Gaussian integral (for which $A=1$, $B=C=0$).
 \end{frame}
 
-\begin{frame}{One-dimensional posterior}
+\begin{frame}{Marginalised posterior for $b$}
 Thus we get to our goal: the marginalised posterior for $b$ (under this model):
 	\begin{equation*}
 	p(b | \tilde{x}, \tilde{y}) \propto \frac{1}{\sqrt{1+b^2}} \exp\left( \frac{(\tilde{x}+b\tilde{y})^2}{2(1+b^2)}\right)
@@ -298,11 +299,54 @@ Thus we get to our goal: the marginalised posterior for $b$ (under this model):
     \end{itemize}
 \end{frame}
 
+\begin{frame}{Marginalised posterior for $b$}
+	\begin{figure}
+	\centering
+		\includegraphics[scale=0.62]{figure_5.png}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Marginalised posterior for $b$}
+        \begin{itemize}
+    \item{Note the (anticipated) tail to the right.}
+    \item{The value $1.21$ displayed at the at the top of the plot is the \textit{mode} i.e. the value of $b$ for which the posterior probability density is maximum. Note that it's close to, but a little less than, the ratio $\tilde{b} = \tilde{y} / \tilde{x}$ seen in the data.}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Joint posterior for $b$  and $x$}
+	\begin{figure}
+	\centering
+		\includegraphics[scale=0.62]{figure_6.png}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Joint posterior for $b$  and $x$, showing $y=bx$ as well}
+	\begin{figure}
+	\centering
+		\includegraphics[scale=0.62]{figure_7.png}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Posteriors for baryon/DM ratio from 2509.18967}
+	\begin{figure}
+	\centering
+		\includegraphics[scale=0.38]{figure_2509_18967.png}
+	\end{figure}
+\end{frame}
+
 \begin{frame}{Widening the tophat priors}
 The left and right bounds on the priors for $x$ and $b$ were somewhat arbitrary. Can we get rid of these bounds, so that the prior density is the same non-zero value everywhere? Mathematically we do this by taking the limit as the bounds go to plus and minus infinity.
  \begin{itemize}
     \item{For $x$ there is no problem; the required limits exist. In fact we already assumed $-\infty < x < \infty$ when we did the marginalisation integral.}
     \item{But for $b$ we see that the posterior looks like $(1+b^2)^{-1/2}$ for large $b$; the integral of this over $0 < b < \infty$ is infinite. This is bad news for a probability distribution, as it means we can't normalise it so that the total probability (i.e. the area under the posterior function} is unity. So it's crucial to have a prior with a right-hand cutoff!
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Bayes's theory works even for bad models}
+ \begin{itemize}
+    \item{We could have used these ideas to constrain the parameters even of a bad model.}
+    \item{For example, we could have modelled the ratio as the sine of an angle $\sin(\theta) = y/x$; we would still get constraints on $\theta$.}
+    \item{\textit{Bayesian model comparison} lets us separate good models from bad.}
     \end{itemize}
 \end{frame}
 

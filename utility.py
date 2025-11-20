@@ -16,6 +16,8 @@ def print_numpy_version():
 
 def make_plots():
     
+    np.random.seed(0)
+    
     
     x_tilda = 3.0
     y_tilda = 4.0
@@ -33,6 +35,8 @@ def make_plots():
     # Observed data
     if True:
         plt.plot([x_tilda,], [y_tilda,], 'or')
+        plt.xlabel(r'$x$')
+        plt.ylabel(r'$y$')
         plt.savefig('./figure_1.png', bbox_inches="tight")
     
     if True:
@@ -50,19 +54,22 @@ def make_plots():
         plt.savefig('./figure_3.png', bbox_inches="tight")
     plt.show()
     
-    plt.clf
-    
-    plt.xlim(lower_limit, upper_limit)
-    plt.ylim(lower_limit, upper_limit)
-    plt.gca().set_aspect('equal')
     
     
-    b_prior_low = 0.0
-    b_prior_high = 10.0
-    x_prior_low = -10.0
-    x_prior_high = 30.0
     
-    if True:
+    if False:
+        
+        plt.clf
+    
+        plt.xlim(lower_limit, upper_limit)
+        plt.ylim(lower_limit, upper_limit)
+        plt.gca().set_aspect('equal')
+       
+        b_prior_low = 0.0
+        b_prior_high = 10.0
+        x_prior_low = -10.0
+        x_prior_high = 30.0
+
         num_data_points = 60000
         plt.plot([x_tilda,], [y_tilda,], 'or')
         b_trues = np.random.uniform(b_prior_low, b_prior_high, num_data_points)
@@ -74,7 +81,7 @@ def make_plots():
         plt.colorbar(res, label=r'True $b$')
         
         plt.savefig('./figure_4.png', bbox_inches="tight")
-    plt.show()
+        plt.show()
         
     
 
