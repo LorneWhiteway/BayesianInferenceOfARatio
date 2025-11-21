@@ -20,6 +20,7 @@
 % https://tex.stackexchange.com/questions/36030/how-to-make-a-single-word-look-as-some-code
 \definecolor{light-gray}{gray}{0.95}
 \newcommand{\code}[1]{\colorbox{light-gray}{\texttt{#1}}}
+\DeclareMathOperator{\erf}{erf}
 
 \usetheme{boxes}
 \usecolortheme{beaver}
@@ -49,7 +50,7 @@
     \begin{itemize}
       \item{The \textit{overdensity} of dark matter (DM), denoted $\delta_{\textrm{DM}}$,  is the percentage difference between the local density (in some volume) and the universal average density. }
       \item{Overdensities have existed since early times. Gravity draws DM into overdense regions, so the overdensities get bigger with time.}
-      \item{There is a similar definition for baryons. Baryons fall into DM overdensities, so we get baryon overdensities in the same place.}
+      \item{There is a similar definition for galaxies. Galaxies form in DM overdensities, so we get galaxy overdensities in the same place.}
     \end{itemize}
   \end{block}
 \end{frame}
@@ -57,43 +58,43 @@
 \begin{frame}{The Original Cosmological Motivation (2)}
   \begin{block}{}
     \begin{itemize}
-      \item{Physical effects mean that the baryon overdensity need not equal the DM overdensity; a simple model assumes a linear relationship:
+      \item{Physical effects mean that the galaxy overdensity need not equal the DM overdensity; a simple model assumes a linear relationship:
       \begin{equation*}
-      b = \frac{\delta_{\textrm{baryon}}}{\delta_{\textrm{DM}}}
+      b = \frac{\delta_{\textrm{galaxy}}}{\delta_{\textrm{DM}}}
       \end{equation*}
       }
       \medskip
-      \item{In a recent paper (\url{https://arxiv.org/abs/2509.18967}), we (Ellen, Niall, LW, Ofer, Josh, et al.) measured the baryon overdensity (from galaxy counts) and the DM overdensity (from weak-lensing mass maps). But how then to infer something about $b$?}
+      \item{In a recent paper (\url{https://arxiv.org/abs/2509.18967}), we (Ellen, Niall, LW, Ofer, Josh, et al.) measured the galaxy overdensity (from galaxy counts) and the DM overdensity (from weak-lensing mass maps). But how then to infer something about $b$?}
     \end{itemize}
   \end{block}
 \end{frame}
 
-\begin{frame}{Restate as a Statistics Problem}
+\begin{frame}{Setting up a toy problem}
   \begin{block}{}
     \begin{itemize}
       \item{We make noisy measurements of $x$ and $y$ and we want to infer $b = y/x$.}
-      \item{The answer should be probabilistic (due to the uncertainty arising from the measurement noise).}
+      \item{The answer will ideally be a probability distribution for $b$ (and not for example just a single `best' estimate).}
     \end{itemize}
   \end{block}
 \end{frame}
 
-\begin{frame}{Noise model}
+\begin{frame}{Noise within the toy problem}
   \begin{block}{}
   \begin{itemize}
     \item{
-    Let's assume a simple model for the measurement noise: \\
+    Our toy problem has simple measurement noise: \\
     \bigskip
-    The measurement noise in $x$ and the measurement noise in $y$ have uncorrelated Gaussian distributions with zero means and with standard deviations $\sigma_x$ and $\sigma_y$ (which we will assume to both be unity).
+    The measurement noise in $x$ and the measurement noise in $y$ have uncorrelated Gaussian distributions with zero means and unit standard deviations.
     }
     \end{itemize}
   \end{block}
 \end{frame}
 
-\begin{frame}{Data}
+\begin{frame}{Data within the toy problem}
   \begin{block}{}
   \begin{itemize}
     \item{We make one observation of $x$ (call the measured value $\tilde{x}$) and one of $y$ (call the measured value $\tilde{y}$). \\ \bigskip}
-    \item{Assume that we are in the low signal-to-noise regime, so $\tilde{x}$ and $\tilde{y}$ are `a few' (e.g. not `a few thousand'). For example, $\tilde{x} = 3$ and $\tilde{y} = 4$.}
+    \item{We measure $\tilde{x} = 3$ and $\tilde{y} = 4$. Signal-to-noise is low!}
     \end{itemize}
   \end{block}
 \end{frame}
@@ -114,9 +115,7 @@
   \end{block}
 \end{frame}
 
-
-
-\begin{frame}{Naive calculation}
+\begin{frame}{Naive: scatter of true $x$, $y$ contingent on observed data}
 	\begin{figure}
 	\centering
 		\includegraphics[scale=0.75]{figure_2.png}
@@ -124,36 +123,19 @@
 \end{frame}
 
 \begin{frame}{Naive calculation}
+    \begin{itemize}
+    \item{In this naive calculation the probability of $b$ is given by the probability mass on a thin pie region (on which $b=y/x$ is constant).}
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Naive: count green dots in pie region to get prob of $b$}
 	\begin{figure}
 	\centering
 		\includegraphics[scale=0.75]{figure_3.png}
 	\end{figure}
 \end{frame}
 
-\begin{frame}{Naive calculation}
-    \begin{itemize}
-    \item{So to calculate $p(b) \mathd{}b$ we need to calculate the probability mass within the thin pie-shaped region.}
-    \item{Note that this region doesn't have constant angular width!}
-     \item{Intuition: should we expect the distribution of $b$ to be Gaussian? symmetric?}
-     \item{Do you expect its mode to be at $\tilde{b} = \tilde{y} / \tilde{x}$?}
-    \end{itemize}
-\end{frame}
-
-\begin{frame}{Naive calculation}
-The calculation we need is
-\begin{equation}
-C \int_{\textrm{pie}} \exp(-\frac{1}{2} (x-\tilde{x})^2 + (y-\tilde{y})^2)) \ \mathd{}x \ \mathd{}y
-\end{equation}
-\end{frame}
-
-\begin{frame}{Naive calculation}
-    Tricks for doing this calculation:
-        \begin{itemize}
-    \item{Use polar coordinates $\mathd{}x \ \mathd{}y =  r \ \mathd{}r \ \mathd{}\theta$.}
-    \item{Don't forget the opposite quadrant! So $-\infty < r < \infty$.}
-     \item{Complete the square.}
-    \end{itemize}
-\end{frame}
 
 
 \begin{frame}{What is the statistical theory behind this calculation?}
@@ -171,17 +153,18 @@ C \int_{\textrm{pie}} \exp(-\frac{1}{2} (x-\tilde{x})^2 + (y-\tilde{y})^2)) \ \m
     \end{itemize}
 \end{frame}
 
-\begin{frame}{Bayesian theory requires \textit{context}}
+\begin{frame}{Bayesian theory requires a \textit{model}}
         \begin{itemize}
-    \item{Context here means a model. The model will generally go all the way from (at the start) some model parameters, via various calculations (some mathematical, some physical, and certainly some modelling the effect of measurement noise) through to (at the end) observables i.e. measured data.}
-    \item{Context also means that we already have existing results (e.g. from prior experiments) on the probability distributions of the model parameters.}
-    \item{If you can generate plausible new `synthetic' measurement results then you have enough context.}
+    \item{This includes a \textit{data model}. The data model will generally go all the way from (at the start) some model parameters, via various calculations (some mathematical, some physical, and certainly some modelling the effect of measurement noise) through to (at the end) observables i.e. measured data.}
+    \item{This also includes \textit{prior} results (e.g. from previous experiments) on the probability distributions of the data model parameters.}
+    \item{Technically, the model is a specification of the joint distribution of parameters and data $p(\textrm{data}, \textrm{params})$.}
+    \item{Can use the model to (e.g.) create new `synthetic' data.}
     \end{itemize}
 \end{frame}
 
 \begin{frame}{Bayesian inference}
         \begin{itemize}
-    \item{With new data in hand, we use the rules of conditional probability to refine the probability distribution of the model parameters, moving from the \textit{prior} probability that we had before our experiment to the new \textit{posterior} probability after our experiment.}
+    \item{Once we have new data, we use the rules of conditional probability to refine the probability distribution of the data model parameters, moving from the \textit{prior} probability that we had before our experiment to the new \textit{posterior} probability after our experiment.}
     \item{The result from conditional probability is Bayes's Theorem: \\
     \begin{equation*}
     p(\textrm{params}|\textrm{data}) \propto p(\textrm{data} | \textrm{params}) \ p(\textrm{params})
@@ -272,7 +255,7 @@ C \int_{\textrm{pie}} \exp(-\frac{1}{2} (x-\tilde{x})^2 + (y-\tilde{y})^2)) \ \m
 \begin{frame}{Get rid of the nuisance parameter}
         \begin{itemize}
     \item{This is our answer - it's the (joint) posterior distribution for $x$ and $b$ (under this model).}
-    \item{But we only care about $b$! So we need to \textit{project} the probabilities from the two-dimensional $(x, b)$ parameter space down to the one-dimensional $b$ parameter space. Do this by integrating over $x$.}
+    \item{But we only care about $b$! So we need to \textit{marginalise} i.e. project the probabilities from the two-dimensional $(x, b)$ parameter space down to the one-dimensional $b$ parameter space. Do this by integrating over $x$.}
     \end{itemize}
 	\begin{align*}
 	p(b | \textrm{data}) &\propto \int p(b, x |\textrm{data})) \ \mathd{}x \\
@@ -327,7 +310,7 @@ Thus we get to our goal: the marginalised posterior for $b$ (under this model):
 	\end{figure}
 \end{frame}
 
-\begin{frame}{Posteriors for baryon/DM ratio from 2509.18967}
+\begin{frame}{Posteriors for galaxy/DM ratio from 2509.18967}
 	\begin{figure}
 	\centering
 		\includegraphics[scale=0.38]{figure_2509_18967.png}
@@ -342,17 +325,58 @@ The left and right bounds on the priors for $x$ and $b$ were somewhat arbitrary.
     \end{itemize}
 \end{frame}
 
-\begin{frame}{Bayes's theory works even for bad models}
+\begin{frame}{Inference works even for a wrong model}
  \begin{itemize}
-    \item{We could have used these ideas to constrain the parameters even of a bad model.}
+    \item{We could have used these ideas to constrain the parameters even of a wrong model.}
     \item{For example, we could have modelled the ratio as the sine of an angle $\sin(\theta) = y/x$; we would still get constraints on $\theta$.}
     \item{\textit{Bayesian model comparison} lets us separate good models from bad.}
     \end{itemize}
 \end{frame}
 
+\begin{frame}{Alternative prior}
+ \begin{itemize}
+    \item{The prior used so far doesn't treat $x$ and $y$ in the same way.}
+    \item{The flat priors on $b$ and $x$ mean that the implied prior density of $y$ is large when $x$ is small and small when $x$ is large.}
+    \item{An alternative prior would be flat on both $x$ and $y$. We can get this within our current model by setting the prior probability of $x$ to be proportional to $|x|$.}
+    \item{This introduces an additional factor of $|x|$ into our posterior.}
+    \item{Note that this is identical to the naive method that I tried first!}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Posterior for alternative prior}
+The marginalised posterior for $b$ (under this model, using flat prior on $b$ and $|x|$ prior on $x$):
+	\begin{equation*}
+	p(b | \tilde{x}, \tilde{y}) \propto \frac{2}{1+b^2} + \frac{2 \sqrt{\pi} \ \Gamma}{1+b^2} \exp(\Gamma^2) \erf(\Gamma)
+	\end{equation*}
+	where 
+	\begin{equation*}
+	\Gamma = \frac{\tilde{x} + b \tilde{y}}{\sqrt{2 (1+b^2)}}
+	\end{equation*}
+\end{frame}
 
 
+\begin{frame}{Posterior for $b$ using a prior that is flat in $x$ and $y$}
+	\begin{figure}
+	\centering
+		\includegraphics[scale=0.62]{figure_8.png}
+	\end{figure}
+\end{frame}
 
+
+\begin{frame}{Posterior for $b$ and $x$ (\& $y$) using prior flat in $x$ and $y$}
+	\begin{figure}
+	\centering
+		\includegraphics[scale=0.62]{figure_9.png}
+	\end{figure}
+\end{frame}
+
+
+\begin{frame}{Comparison: impact of prior}
+	\begin{figure}
+	\centering
+		\includegraphics[scale=0.62]{figure_10.png}
+	\end{figure}
+\end{frame}
 
 
 
