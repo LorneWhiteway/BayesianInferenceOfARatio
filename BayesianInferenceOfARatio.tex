@@ -242,11 +242,11 @@
 
 
 \begin{frame}{Posterior}
-	So now we can use Bayes's Theorem to write down the posterior. But if we have written out the graph correctly, then it's just a matter of multiplying all the probabilities in the graph (and you can skip to the third line):
+	So now we can use Bayes's Theorem to write down the posterior. If we have written out the graph correctly, then it's just a matter of multiplying all the probabilities in the graph and integrating over any intermediate variables (and so you can skip to the third line):
 	\begin{align*}
 	p(b, x | \tilde{x}, \tilde{y}) &\propto  p(\tilde{x}, \tilde{y}|b, x) \ p(b) \ p(x) \\
-	&\propto p(\tilde{x} | x) \ p(\tilde{y} | y) \ p(y | x, b) \ p(b) \ p(x) \\
-	&\propto \mathcal{N}(\tilde{x}; x, 1) \ \mathcal{N}(\tilde{y}; y, 1) \ \delta(y-xb) \ U(b) \ U(x) \\ 
+	&\propto \int p(\tilde{x} | x) \ p(\tilde{y} | y) \ p(y | x, b) \ p(b) \ p(x) \ \mathd{}y\\
+	&\propto \int \mathcal{N}(\tilde{x}; x, 1) \ \mathcal{N}(\tilde{y}; y, 1) \ \delta(y-xb) \ U(b) \ U(x) \ \mathd{}y\\ 
 	&\propto \mathcal{N}(\tilde{x}; x, 1) \ \mathcal{N}(\tilde{y}; xb, 1) \ U(b) \ U(x) \\
 	&\propto \exp(-\frac{1}{2} ((\tilde{x} - x)^2 + (\tilde{y} - xb)^2)) \ U(b) \ U(x) \\
 	\end{align*}
@@ -321,7 +321,7 @@ Thus we get to our goal: the marginalised posterior for $b$ (under this model):
 The left and right bounds on the priors for $x$ and $b$ were somewhat arbitrary. Can we get rid of these bounds, so that the prior density is the same non-zero value everywhere? Mathematically we do this by taking the limit as the bounds go to plus and minus infinity.
  \begin{itemize}
     \item{For $x$ there is no problem; the required limits exist. In fact we already assumed $-\infty < x < \infty$ when we did the marginalisation integral.}
-    \item{But for $b$ we see that the posterior looks like $(1+b^2)^{-1/2}$ for large $b$; the integral of this over $0 < b < \infty$ is infinite. This is bad news for a probability distribution, as it means we can't normalise it so that the total probability (i.e. the area under the posterior function} is unity. So it's crucial to have a prior with a right-hand cutoff!
+    \item{But for $b$ we see that the posterior looks like $(1+b^2)^{-1/2}$ for large $b$; the integral of this over $0 < b < \infty$ is infinite. This is bad news for a probability distribution, as it means we can't normalise it so that the total probability (i.e. the area under the posterior function) is unity. So it's crucial to have a prior with a right-hand cutoff!}
     \end{itemize}
 \end{frame}
 
